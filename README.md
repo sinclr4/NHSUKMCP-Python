@@ -29,8 +29,8 @@ pip install -e .
 Set these environment variables:
 
 ```bash
-export AZURE_SEARCH_ENDPOINT="https://nhsuksearchintuks.search.windows.net"
-export AZURE_SEARCH_API_KEY="your-api-key-here"
+export API_MANAGEMENT_ENDPOINT="https://nhsuksearchintuks.search.windows.net"
+export API_MANAGEMENT_SUBSCRIPTION_KEY="your-api-key-here"
 export AZURE_SEARCH_POSTCODE_INDEX="postcodesandplaces-1-0-b-int"
 export AZURE_SEARCH_SERVICE_INDEX="service-search-internal-3-11"
 ```
@@ -51,8 +51,8 @@ Add to your `claude_desktop_config.json`:
       "args": ["-m", "nhs_orgs_mcp.server"],
       "cwd": "/Users/robsinclair/NHSUKMCP-Python",
       "env": {
-        "AZURE_SEARCH_ENDPOINT": "https://nhsuksearchintuks.search.windows.net",
-        "AZURE_SEARCH_API_KEY": "your-api-key-here",
+        "API_MANAGEMENT_ENDPOINT": "https://nhsuksearchintuks.search.windows.net",
+        "API_MANAGEMENT_SUBSCRIPTION_KEY": "your-api-key-here",
         "AZURE_SEARCH_POSTCODE_INDEX": "postcodesandplaces-1-0-b-int",
         "AZURE_SEARCH_SERVICE_INDEX": "service-search-internal-3-11"
       }
@@ -71,8 +71,8 @@ Add to your `claude_desktop_config.json`:
       "args": ["-m", "nhs_orgs_mcp.server"],
       "cwd": "C:\\Users\\YourUsername\\NHSUKMCP-Python",
       "env": {
-        "AZURE_SEARCH_ENDPOINT": "https://nhsuksearchintuks.search.windows.net",
-        "AZURE_SEARCH_API_KEY": "your-api-key-here",
+        "API_MANAGEMENT_ENDPOINT": "https://nhsuksearchintuks.search.windows.net",
+        "API_MANAGEMENT_SUBSCRIPTION_KEY": "your-api-key-here",
         "AZURE_SEARCH_POSTCODE_INDEX": "postcodesandplaces-1-0-b-int",
         "AZURE_SEARCH_SERVICE_INDEX": "service-search-internal-3-11"
       }
@@ -101,8 +101,8 @@ docker build -t nhsorgsmcp-python:latest .
 
 # Run with environment variables
 docker run -i \
-  -e AZURE_SEARCH_ENDPOINT="https://nhsuksearchintuks.search.windows.net" \
-  -e AZURE_SEARCH_API_KEY="your-key" \
+  -e API_MANAGEMENT_ENDPOINT="https://nhsuksearchintuks.search.windows.net" \
+  -e API_MANAGEMENT_SUBSCRIPTION_KEY="your-key" \
   -e AZURE_SEARCH_POSTCODE_INDEX="postcodesandplaces-1-0-b-int" \
   -e AZURE_SEARCH_SERVICE_INDEX="service-search-internal-3-11" \
   nhsorgsmcp-python:latest
@@ -127,10 +127,10 @@ az containerapp update \
   --resource-group $RESOURCE_GROUP \
   --image $ACR_NAME.azurecr.io/nhsorgsmcp-python:latest \
   --set-env-vars \
-    AZURE_SEARCH_ENDPOINT="https://nhsuksearchintuks.search.windows.net" \
+    API_MANAGEMENT_ENDPOINT="https://nhsuksearchintuks.search.windows.net" \
     AZURE_SEARCH_POSTCODE_INDEX="postcodesandplaces-1-0-b-int" \
     AZURE_SEARCH_SERVICE_INDEX="service-search-internal-3-11" \
-  --secrets AZURE_SEARCH_API_KEY="your-api-key"
+  --secrets API_MANAGEMENT_SUBSCRIPTION_KEY="your-api-key"
 ```
 
 ## Available MCP Tools

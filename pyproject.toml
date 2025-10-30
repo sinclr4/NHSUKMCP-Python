@@ -1,7 +1,7 @@
 [project]
 name = "nhs-organizations-mcp"
 version = "1.0.0"
-description = "NHS Organizations MCP Server - Search NHS organizations by type and location using Azure Cognitive Search"
+description = "NHS Organizations MCP Server - Search NHS organizations by type and location"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -35,10 +35,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/nhs-organizations-mcp"
-Documentation = "https://github.com/yourusername/nhs-organizations-mcp#readme"
-Repository = "https://github.com/yourusername/nhs-organizations-mcp"
-Issues = "https://github.com/yourusername/nhs-organizations-mcp/issues"
+Homepage = "https://github.com/sinclr4/nhs-organizations-mcp-python"
+Documentation = "https://github.com/sinclr4/nhs-organizations-mcp-python#readme"
+Repository = "https://github.com/sinclr4/nhs-organizations-mcp-python"
+Issues = "https://github.com/sinclr4/nhs-organizations-mcp-python/issues"
 
 [project.scripts]
 nhs-orgs-mcp = "nhs_orgs_mcp.server:main"
