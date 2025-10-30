@@ -298,6 +298,68 @@ async def handle_call_tool(
                 text=f"Error: {str(e)}"
             )]
     
+    elif name == "get_health_topic":
+        if not arguments:
+            raise ValueError("Arguments required")
+        
+        topic = arguments.get("topic", "").lower().strip()
+        
+        if not topic:
+            raise ValueError("topic parameter is required")
+        
+        if not search_service.is_configured:
+            return [types.TextContent(
+                type="text",
+                text="Error: API Management service is not configured. Please set API_MANAGEMENT_SUBSCRIPTION_KEY environment variable."
+            )]
+        
+        try:
+            health_data = await search_service.get_health_topic(topic)
+            
+            if not health_data:
+                return [types.TextContent(
+                    type="text",
+                    text=f"Health topic '{topic}' not found. Please check the topic name and try again. Use lowercase with hyphens for multi-word topics (e.g., 'heart-disease', 'type-2-diabetes')."
+                )]
+            
+            result_text = f"# {health_data.get('name', 'Unknown Topic')}\n\n"
+            
+            if health_data.get('description'):
+                result_text += f"{health_data['description']}\n\n"
+            
+            if health_data.get('lastReviewed') and health_data['lastReviewed'][0]:
+                result_text += f"**Last Reviewed:** {health_data['lastReviewed'][0]}\n\n"
+            
+            if health_data.get('url'):
+                result_text += f"**URL:** {health_data['url']}\n\n"
+            
+            # Add content sections if available
+            if health_data.get('sections'):
+                result_text += "## Content Sections\n\n"
+                for i, section in enumerate(health_data['sections'], 1):
+                    if section.get('headline'):
+                        result_text += f"### {section['headline']}\n\n"
+                    if section.get('description'):
+                        result_text += f"{section['description']}\n\n"
+                    if section.get('text'):
+                        # Limit text length to avoid overwhelming output
+                        text = section['text']
+                        if len(text) > 500:
+                            text = text[:500] + "..."
+                        result_text += f"{text}\n\n"
+            
+            return [types.TextContent(
+                type="text",
+                text=result_text
+            )]
+            
+        except Exception as e:
+            logger.error(f"Error fetching health topic: {e}")
+            return [types.TextContent(
+                type="text",
+                text=f"Error: {str(e)}"
+            )]
+    
     else:
         raise ValueError(f"Unknown tool: {name}")
 

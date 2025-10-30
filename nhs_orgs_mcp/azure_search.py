@@ -203,3 +203,67 @@ class AzureSearchService:
         c = 2 * atan2(sqrt(a), sqrt(1-a))
         
         return R * c
+
+    async def get_health_topic(self, topic_slug: str) -> Optional[dict]:
+        """Get health condition/topic information from NHS API
+        
+        Args:
+            topic_slug: The URL slug for the condition (e.g., 'asthma', 'diabetes', 'flu')
+            
+        Returns:
+            Dictionary with health topic information including name, description, and content
+        """
+        if not self.is_configured:
+            logger.error("API Management not configured")
+            return None
+        
+        # Conditions API endpoint (different from service-search)
+        url = f"https://nhsuk-apim-int-uks.azure-api.net/conditions/{topic_slug}"
+        
+        headers = {
+            "subscription-key": self.subscription_key
+        }
+        
+        try:
+            async with httpx.AsyncClient() as client:
+                logger.info(f"Fetching health topic: {topic_slug}")
+                response = await client.get(url, headers=headers, timeout=30.0)
+                response.raise_for_status()
+                
+                data = response.json()
+                logger.debug(f"Health topic response: {data.get('name', 'Unknown')}")
+                
+                # Extract relevant information
+                result = {
+                    "name": data.get("name"),
+                    "description": data.get("description"),
+                    "url": data.get("url"),
+                    "dateModified": data.get("dateModified"),
+                    "lastReviewed": data.get("lastReviewed", [None, None]),
+                    "genre": data.get("genre", []),
+                }
+                
+                # Extract main content sections if available
+                if "mainEntityOfPage" in data:
+                    main_content = data["mainEntityOfPage"]
+                    if isinstance(main_content, list):
+                        result["sections"] = []
+                        for section in main_content:
+                            if isinstance(section, dict):
+                                result["sections"].append({
+                                    "headline": section.get("headline"),
+                                    "text": section.get("text"),
+                                    "description": section.get("description")
+                                })
+                
+                return result
+                
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == 404:
+                logger.warning(f"Health topic not found: {topic_slug}")
+                return None
+            logger.error(f"HTTP error fetching health topic: {e.response.status_code} - {e.response.text}")
+            return None
+        except Exception as e:
+            logger.error(f"Error fetching health topic: {str(e)}")
+            return None

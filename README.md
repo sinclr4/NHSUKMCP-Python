@@ -82,7 +82,7 @@ Add to your Claude Desktop config file:
 
 ### Restart Claude Desktop
 
-After updating the configuration, restart Claude Desktop. The MCP server will be available with 4 tools.
+After updating the configuration, restart Claude Desktop. The MCP server will be available with 5 tools.
 
 ## Available MCP Tools
 
@@ -130,6 +130,18 @@ Search for NHS organizations near specific coordinates.
 - `maxResults` (integer, optional): Maximum number of results (1-50, default: 10)
 
 **Returns**: List of organizations with name, address, postcode, distance, and coordinates
+
+### 5. get_health_topic
+
+Get detailed information about a specific health condition or topic from the NHS API.
+
+**Parameters**:
+- `topic` (string, required): The health topic or condition slug (e.g., "asthma", "diabetes", "flu", "covid-19")
+
+**Returns**: Comprehensive information including name, description, last reviewed date, URL, and content sections
+
+**Example topics**: asthma, diabetes, flu, covid-19, heart-disease, stroke, cancer, depression, anxiety
+
 
 ## Supported Organization Types
 
@@ -188,6 +200,9 @@ Once configured in Claude Desktop, you can ask questions like:
 - "What's the nearest hospital to coordinates 51.5074, -0.1278?"
 - "Convert postcode M1 1AE to coordinates"
 
+- "Get information about asthma"
+- "Tell me about diabetes symptoms and treatment"
+- "What is the NHS guidance on flu?"
 ## Development
 
 ### Local Setup
