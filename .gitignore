@@ -53,3 +53,8 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
