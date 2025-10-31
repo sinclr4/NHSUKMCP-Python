@@ -110,6 +110,20 @@ async def handle_list_tools() -> list[types.Tool]:
                 },
                 "required": ["organizationType", "latitude", "longitude"]
             }
+        ),
+        types.Tool(
+            name="get_health_topic",
+            description="Get detailed information about a specific health condition or topic from the NHS API",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "topic": {
+                        "type": "string",
+                        "description": "The health topic or condition slug (e.g., 'asthma', 'diabetes', 'flu', 'covid-19'). Use lowercase with hyphens for multi-word topics."
+                    }
+                },
+                "required": ["topic"]
+            }
         )
     ]
 
@@ -136,7 +150,7 @@ async def handle_call_tool(
         if not search_service.is_configured:
             return [types.TextContent(
                 type="text",
-                text="Error: Azure Search service is not configured. Please set AZURE_SEARCH_API_KEY environment variable."
+                text="Error: API Management service is not configured. Please set API_MANAGEMENT_SUBSCRIPTION_KEY environment variable."
             )]
         
         try:
@@ -178,7 +192,7 @@ async def handle_call_tool(
         if not search_service.is_configured:
             return [types.TextContent(
                 type="text",
-                text="Error: Azure Search service is not configured. Please set AZURE_SEARCH_API_KEY environment variable."
+                text="Error: API Management service is not configured. Please set API_MANAGEMENT_SUBSCRIPTION_KEY environment variable."
             )]
         
         try:
@@ -253,7 +267,7 @@ async def handle_call_tool(
         if not search_service.is_configured:
             return [types.TextContent(
                 type="text",
-                text="Error: Azure Search service is not configured. Please set AZURE_SEARCH_API_KEY environment variable."
+                text="Error: API Management service is not configured. Please set API_MANAGEMENT_SUBSCRIPTION_KEY environment variable."
             )]
         
         try:

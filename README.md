@@ -1,6 +1,6 @@
 # NHS Organizations MCP Server
 
-A Model Context Protocol (MCP) server that provides tools for searching NHS organizations by type and location using Azure API Management.
+A Model Context Protocol (MCP) server that provides tools for searching NHS organizations by type and location, plus accessing NHS health information using Azure API Management.
 
 ## Features
 
@@ -8,6 +8,7 @@ A Model Context Protocol (MCP) server that provides tools for searching NHS orga
 - **Convert Postcode**: Convert UK postcodes to latitude/longitude coordinates
 - **Search by Postcode**: Find NHS organizations near a specific postcode
 - **Search by Coordinates**: Find NHS organizations near specific coordinates
+- **Get Health Topic**: Get detailed NHS health information and guidance on medical conditions
 
 ## Installation
 

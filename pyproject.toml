@@ -1,7 +1,7 @@
 [project]
 name = "nhs-organizations-mcp"
-version = "1.0.2"
-description = "NHS Organizations MCP Server - Search NHS organizations by type and location"
+version = "1.0.3"
+description = "NHS Organizations MCP Server - Search NHS organizations by type and location, plus access NHS health information"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
