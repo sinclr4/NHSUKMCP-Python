@@ -86,7 +86,7 @@ To test before publishing to real PyPI:
 - **PyPI URL**: https://pypi.org/project/nhsuk-mcp/
 - **GitHub**: https://github.com/sinclr4/nhsuk-mcp-python
 - **Install Command**: `pip install nhsuk-mcp`
-- **Current Version**: 1.0.0
+- **Current Version**: 1.0.5
 
 ## Troubleshooting
 
