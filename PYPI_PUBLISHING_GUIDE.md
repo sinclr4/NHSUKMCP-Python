@@ -31,8 +31,8 @@ python3 -m build
 ```
 
 This creates:
-- `dist/nhs_organisations_mcp-X.Y.Z.tar.gz` (source distribution)
-- `dist/nhs_organisations_mcp-X.Y.Z-py3-none-any.whl` (wheel)
+- `dist/nhsuk_mcp-X.Y.Z.tar.gz` (source distribution)
+- `dist/nhsuk_mcp-X.Y.Z-py3-none-any.whl` (wheel)
 
 ### 3. Upload to PyPI
 
@@ -46,14 +46,14 @@ When prompted:
 
 ### 4. Verify Publication
 
-Visit: https://pypi.org/project/nhs-organisations-mcp/
+Visit: https://pypi.org/project/nhsuk-mcp/
 
 ## Installation Test
 
 After publication, anyone can install with:
 
 ```bash
-pip install nhs-organisations-mcp
+pip install nhsuk-mcp
 ```
 
 ## Testing Installation
@@ -78,14 +78,14 @@ To test before publishing to real PyPI:
 
 1. Create account at https://test.pypi.org/
 2. Upload: `python3 -m twine upload --repository testpypi dist/*`
-3. Install: `pip install --index-url https://test.pypi.org/simple/ nhs-organisations-mcp`
+3. Install: `pip install --index-url https://test.pypi.org/simple/ nhsuk-mcp`
 
 ## Package Information
 
-- **Package Name**: `nhs-organisations-mcp`
-- **PyPI URL**: https://pypi.org/project/nhs-organisations-mcp/
-- **GitHub**: https://github.com/sinclr4/nhs-organisations-mcp-python
-- **Install Command**: `pip install nhs-organisations-mcp`
+- **Package Name**: `nhsuk-mcp`
+- **PyPI URL**: https://pypi.org/project/nhsuk-mcp/
+- **GitHub**: https://github.com/sinclr4/nhsuk-mcp-python
+- **Install Command**: `pip install nhsuk-mcp`
 - **Current Version**: 1.0.0
 
 ## Troubleshooting
@@ -110,8 +110,7 @@ pip install --upgrade build twine
 Users can install and use with:
 
 ```bash
-```bash
-pip install nhs-organisations-mcp
+pip install nhsuk-mcp
 ```
 
 Add to `claude_desktop_config.json`:
@@ -119,5 +118,5 @@ Add to `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "nhs-organisations": {
+    "nhsuk": {
 ```

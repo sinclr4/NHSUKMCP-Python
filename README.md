@@ -1,4 +1,4 @@
-# NHS Organisations MCP Server
+# NHSUK MCP Server
 
 A Model Context Protocol (MCP) server that provides tools for searching NHS organisations by type and location, plus accessing NHS health information using Azure API Management.
 
@@ -15,14 +15,14 @@ A Model Context Protocol (MCP) server that provides tools for searching NHS orga
 ### From PyPI (Recommended)
 
 ```bash
-pip install nhs-organisations-mcp
+pip install nhsuk-mcp
 ```
 
 ### From Source
 
 ```bash
-git clone https://github.com/sinclr4/nhs-organisations-mcp-python.git
-cd nhs-organisations-mcp-python
+git clone https://github.com/sinclr4/nhsuk-mcp-python.git
+cd nhsuk-mcp-python
 pip install -e .
 ```
 
@@ -40,7 +40,7 @@ This server requires two environment variables:
 ### Installation
 
 ```bash
-pip install nhs-organisations-mcp
+pip install nhsuk-mcp
 ```
 
 ### Configuration
@@ -210,8 +210,8 @@ Once configured in Claude Desktop, you can ask questions like:
 
 ```bash
 # Clone repository
-git clone https://github.com/sinclr4/nhs-organisations-mcp-python.git
-cd nhs-organisations-mcp-python
+git clone https://github.com/sinclr4/nhsuk-mcp-python.git
+cd nhsuk-mcp-python
 
 # Create virtual environment
 python -m venv venv
@@ -231,7 +231,7 @@ python -m nhs_orgs_mcp.server
 ### Project Structure
 
 ```
-nhs-organisations-mcp-python/
+nhsuk-mcp-python/
 ├── nhs_orgs_mcp/
 │   ├── __init__.py          # Package initialization
 │   ├── server.py            # MCP server implementation
@@ -256,9 +256,9 @@ MIT License - See LICENSE file for details
 
 ## Links
 
-- **PyPI**: https://pypi.org/project/nhs-organisations-mcp/
-- **GitHub**: https://github.com/sinclr4/nhs-organisations-mcp-python
-- **Issues**: https://github.com/sinclr4/nhs-organisations-mcp-python/issues
+- **PyPI**: https://pypi.org/project/nhsuk-mcp/
+- **GitHub**: https://github.com/sinclr4/nhsuk-mcp-python  
+- **Issues**: https://github.com/sinclr4/nhsuk-mcp-python/issues
 
 ## Author
 
