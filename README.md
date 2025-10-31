@@ -52,9 +52,9 @@ Add to your Claude Desktop config file:
 ```json
 {
   "mcpServers": {
-    "nhs-organisations": {
+    "nhsuk": {
       "command": "python",
-      "args": ["-m", "nhs_orgs_mcp.server"],
+      "args": ["-m", "nhsuk_mcp.server"],
       "env": {
         "API_MANAGEMENT_ENDPOINT": "https://nhsuk-apim-int-uks.azure-api.net/service-search",
         "API_MANAGEMENT_SUBSCRIPTION_KEY": "your-subscription-key-here"
@@ -69,11 +69,11 @@ Add to your Claude Desktop config file:
 ```json
 {
   "mcpServers": {
-    "nhs-organisations": {
+    "nhsuk": {
       "command": "python",
-      "args": ["-m", "nhs_orgs_mcp.server"],
+      "args": ["-m", "nhsuk_mcp.server"],
       "env": {
-        "API_MANAGEMENT_ENDPOINT": "https://nhsuk-apim-int-uks.azure-api.net/service-search",
+        "API_MANAGEMENT_ENDPOINT": "https://nhsuk-apim-int-uks.azure-api.net/service-search",  
         "API_MANAGEMENT_SUBSCRIPTION_KEY": "your-subscription-key-here"
       }
     }
@@ -225,14 +225,14 @@ export API_MANAGEMENT_ENDPOINT="https://nhsuk-apim-int-uks.azure-api.net/service
 export API_MANAGEMENT_SUBSCRIPTION_KEY="your-key"
 
 # Run the server
-python -m nhs_orgs_mcp.server
+python -m nhsuk_mcp.server
 ```
 
 ### Project Structure
 
 ```
 nhsuk-mcp-python/
-├── nhs_orgs_mcp/
+├── nhsuk_mcp/
 │   ├── __init__.py          # Package initialization
 │   ├── server.py            # MCP server implementation
 │   ├── models.py            # Data models (Organisation, PostcodeResult)
