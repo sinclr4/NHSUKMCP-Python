@@ -1,13 +1,13 @@
-# NHS Organizations MCP Server
+# NHS Organisations MCP Server
 
-A Model Context Protocol (MCP) server that provides tools for searching NHS organizations by type and location, plus accessing NHS health information using Azure API Management.
+A Model Context Protocol (MCP) server that provides tools for searching NHS organisations by type and location, plus accessing NHS health information using Azure API Management.
 
 ## Features
 
-- **Get Organization Types**: List all 24 available NHS organization types
+- **Get Organisation Types**: List all 24 available NHS organisation types
 - **Convert Postcode**: Convert UK postcodes to latitude/longitude coordinates
-- **Search by Postcode**: Find NHS organizations near a specific postcode
-- **Search by Coordinates**: Find NHS organizations near specific coordinates
+- **Search by Postcode**: Find NHS organisations near a specific postcode
+- **Search by Coordinates**: Find NHS organisations near specific coordinates
 - **Get Health Topic**: Get detailed NHS health information and guidance on medical conditions
 
 ## Installation
@@ -15,14 +15,14 @@ A Model Context Protocol (MCP) server that provides tools for searching NHS orga
 ### From PyPI (Recommended)
 
 ```bash
-pip install nhs-organizations-mcp
+pip install nhs-organisations-mcp
 ```
 
 ### From Source
 
 ```bash
-git clone https://github.com/sinclr4/nhs-organizations-mcp-python.git
-cd nhs-organizations-mcp-python
+git clone https://github.com/sinclr4/nhs-organisations-mcp-python.git
+cd nhs-organisations-mcp-python
 pip install -e .
 ```
 
@@ -40,7 +40,7 @@ This server requires two environment variables:
 ### Installation
 
 ```bash
-pip install nhs-organizations-mcp
+pip install nhs-organisations-mcp
 ```
 
 ### Configuration
@@ -52,7 +52,7 @@ Add to your Claude Desktop config file:
 ```json
 {
   "mcpServers": {
-    "nhs-organizations": {
+    "nhs-organisations": {
       "command": "python",
       "args": ["-m", "nhs_orgs_mcp.server"],
       "env": {
@@ -69,7 +69,7 @@ Add to your Claude Desktop config file:
 ```json
 {
   "mcpServers": {
-    "nhs-organizations": {
+    "nhs-organisations": {
       "command": "python",
       "args": ["-m", "nhs_orgs_mcp.server"],
       "env": {
@@ -87,11 +87,11 @@ After updating the configuration, restart Claude Desktop. The MCP server will be
 
 ## Available MCP Tools
 
-### 1. get_organization_types
+### 1. get_organisation_types
 
-Lists all NHS organization types with descriptions.
+Lists all NHS organisation types with descriptions.
 
-**Returns**: Dictionary of organization type codes and their descriptions.
+**Returns**: Dictionary of organisation type codes and their descriptions.
 
 **Example types**:
 - `PHA` - Pharmacy
@@ -109,28 +109,28 @@ Converts a UK postcode to latitude/longitude coordinates.
 
 **Returns**: Latitude and longitude coordinates
 
-### 3. search_organizations_by_postcode
+### 3. search_organisations_by_postcode
 
-Search for NHS organizations near a specific postcode.
+Search for NHS organisations near a specific postcode.
 
 **Parameters**:
-- `organizationType` (string, required): Organization type code (e.g., "PHA", "GPP", "HOS")
+- `organisationType` (string, required): Organisation type code (e.g., "PHA", "GPP", "HOS")
 - `postcode` (string, required): UK postcode
 - `maxResults` (integer, optional): Maximum number of results (1-50, default: 10)
 
-**Returns**: List of organizations with name, address, postcode, distance, and coordinates
+**Returns**: List of organisations with name, address, postcode, distance, and coordinates
 
-### 4. search_organizations_by_coordinates
+### 4. search_organisations_by_coordinates
 
-Search for NHS organizations near specific coordinates.
+Search for NHS organisations near specific coordinates.
 
 **Parameters**:
-- `organizationType` (string, required): Organization type code
+- `organisationType` (string, required): Organisation type code
 - `latitude` (number, required): Latitude coordinate
 - `longitude` (number, required): Longitude coordinate
 - `maxResults` (integer, optional): Maximum number of results (1-50, default: 10)
 
-**Returns**: List of organizations with name, address, postcode, distance, and coordinates
+**Returns**: List of organisations with name, address, postcode, distance, and coordinates
 
 ### 5. get_health_topic
 
@@ -144,9 +144,9 @@ Get detailed information about a specific health condition or topic from the NHS
 **Example topics**: asthma, diabetes, flu, covid-19, heart-disease, stroke, cancer, depression, anxiety
 
 
-## Supported Organization Types
+## Supported Organisation Types
 
-The server supports 24 NHS organization types:
+The server supports 24 NHS organisation types:
 
 | Code | Description |
 |------|-------------|
@@ -195,7 +195,7 @@ docker run -i \
 
 Once configured in Claude Desktop, you can ask questions like:
 
-- "What NHS organization types are available?"
+- "What NHS organisation types are available?"
 - "Find pharmacies near postcode SW1A 1AA"
 - "Show me GP practices within 5 miles of London"
 - "What's the nearest hospital to coordinates 51.5074, -0.1278?"
@@ -210,8 +210,8 @@ Once configured in Claude Desktop, you can ask questions like:
 
 ```bash
 # Clone repository
-git clone https://github.com/sinclr4/nhs-organizations-mcp-python.git
-cd nhs-organizations-mcp-python
+git clone https://github.com/sinclr4/nhs-organisations-mcp-python.git
+cd nhs-organisations-mcp-python
 
 # Create virtual environment
 python -m venv venv
@@ -231,11 +231,11 @@ python -m nhs_orgs_mcp.server
 ### Project Structure
 
 ```
-nhs-organizations-mcp-python/
+nhs-organisations-mcp-python/
 ├── nhs_orgs_mcp/
 │   ├── __init__.py          # Package initialization
 │   ├── server.py            # MCP server implementation
-│   ├── models.py            # Data models (Organization, PostcodeResult)
+│   ├── models.py            # Data models (Organisation, PostcodeResult)
 │   └── azure_search.py      # API Management service integration
 ├── pyproject.toml           # Project metadata and dependencies
 ├── Dockerfile               # Container build configuration
@@ -256,9 +256,9 @@ MIT License - See LICENSE file for details
 
 ## Links
 
-- **PyPI**: https://pypi.org/project/nhs-organizations-mcp/
-- **GitHub**: https://github.com/sinclr4/nhs-organizations-mcp-python
-- **Issues**: https://github.com/sinclr4/nhs-organizations-mcp-python/issues
+- **PyPI**: https://pypi.org/project/nhs-organisations-mcp/
+- **GitHub**: https://github.com/sinclr4/nhs-organisations-mcp-python
+- **Issues**: https://github.com/sinclr4/nhs-organisations-mcp-python/issues
 
 ## Author
 

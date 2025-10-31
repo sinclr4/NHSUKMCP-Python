@@ -4,7 +4,7 @@ import os
 import logging
 from typing import List, Optional
 import httpx
-from .models import PostcodeResult, Organization
+from .models import PostcodeResult, Organisation
 
 logger = logging.getLogger(__name__)
 
@@ -91,23 +91,23 @@ class AzureSearchService:
             logger.error(f"Error getting postcode coordinates: {str(e)}")
             return None
     
-    async def search_organizations(
-        self, 
-        organization_type: str, 
+    async def search_organisations(
+        self,
+        organisation_type: str,
         latitude: float, 
         longitude: float, 
         max_results: int = 10
-    ) -> List[Organization]:
-        """Search for NHS organizations near a location using API Management
+    ) -> List[Organisation]:
+        """Search for NHS organisations near a location using API Management
         
         Args:
-            organization_type: Type of organization (e.g., 'PHA', 'GPP', 'HOS')
+            organisation_type: Type of organisation (e.g., 'PHA', 'GPP', 'HOS')
             latitude: Latitude coordinate
             longitude: Longitude coordinate
             max_results: Maximum number of results to return
             
         Returns:
-            List of Organization objects
+            List of Organisation objects
         """
         if not self.is_configured:
             logger.error("API Management not configured")
@@ -119,7 +119,7 @@ class AzureSearchService:
         # Create search body with geo filter
         search_body = {
             "search": "*",
-            "filter": f"OrganizationTypeID eq '{organization_type}'",
+            "filter": f"OrganisationTypeID eq '{organisation_type}'",
             "orderby": f"geo.distance(Geocode, geography'POINT({longitude} {latitude})')",
             "top": max_results,
             "count": True
@@ -132,7 +132,7 @@ class AzureSearchService:
         
         try:
             async with httpx.AsyncClient() as client:
-                logger.info(f"Searching for {organization_type} near ({latitude}, {longitude})")
+                logger.info(f"Searching for {organisation_type} near ({latitude}, {longitude})")
                 response = await client.post(
                     url,
                     params=params,
@@ -143,7 +143,7 @@ class AzureSearchService:
                 response.raise_for_status()
                 
                 data = response.json()
-                logger.debug(f"Organization search response: {data}")
+                logger.debug(f"Organisation search response: {data}")
                 
                 # Handle both direct array and wrapped responses
                 if isinstance(data, dict) and "value" in data:
@@ -154,7 +154,7 @@ class AzureSearchService:
                     logger.warning(f"Unexpected response format: {data}")
                     return []
                 
-                organizations = []
+                organisations = []
                 for item in results:
                     geocode = item.get("Geocode", {})
                     
@@ -165,28 +165,23 @@ class AzureSearchService:
                         geocode.get("Longitude", 0)
                     )
                     
-                    org = Organization(
-                        OrganizationName=item.get("OrganizationName"),
-                        OrganizationTypeID=item.get("OrganizationTypeID"),
-                        ODSCode=item.get("ODSCode"),
-                        Address=item.get("Address1", ""),
-                        Postcode=item.get("Postcode"),
-                        Distance=distance,
-                        Geocode=PostcodeResult(
-                            Latitude=geocode.get("Latitude"),
-                            Longitude=geocode.get("Longitude"),
-                            Postcode=None
-                        ) if geocode else None
+                    org = Organisation(
+                        organisation_name=item.get("OrganisationName"),
+                        organisation_type=item.get("OrganisationTypeID"),
+                        organisation_code=item.get("ODSCode"),
+                        address_line_1=item.get("Address1", ""),
+                        postcode=item.get("Postcode"),
+                        distance_miles=distance
                     )
-                    organizations.append(org)
+                    organisations.append(org)
                 
-                return organizations
+                return organisations
                 
         except httpx.HTTPStatusError as e:
-            logger.error(f"HTTP error searching organizations: {e.response.status_code} - {e.response.text}")
+            logger.error(f"HTTP error searching organisations: {e.response.status_code} - {e.response.text}")
             return []
         except Exception as e:
-            logger.error(f"Error searching organizations: {str(e)}")
+            logger.error(f"Error searching organisations: {str(e)}")
             return []
     
     def _calculate_distance(self, lat1: float, lon1: float, lat2: float, lon2: float) -> float:

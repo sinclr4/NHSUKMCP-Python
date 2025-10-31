@@ -2,10 +2,10 @@
 
 ## Publication Details
 
-- **Package Name**: `nhs-organizations-mcp`
-- **Version**: 1.0.0
-- **PyPI URL**: https://pypi.org/project/nhs-organizations-mcp/
-- **GitHub**: https://github.com/sinclr4/nhs-organizations-mcp-python
+- **Package Name**: `nhs-organisations-mcp`
+- **Version**: 1.0.2  
+- **PyPI URL**: https://pypi.org/project/nhs-organisations-mcp/
+- **GitHub**: https://github.com/sinclr4/nhs-organisations-mcp-python
 - **Author**: Rob Sinclair <rob.sinclair@nhschoices.net>
 - **License**: MIT
 
@@ -14,7 +14,7 @@
 Anyone can now install the package globally using:
 
 ```bash
-pip install nhs-organizations-mcp
+pip install nhs-organisations-mcp
 ```
 
 ## Quick Start for Users
@@ -22,7 +22,7 @@ pip install nhs-organizations-mcp
 ### 1. Install the Package
 
 ```bash
-pip install nhs-organizations-mcp
+pip install nhs-organisations-mcp
 ```
 
 ### 2. Configure Claude Desktop
@@ -34,7 +34,7 @@ Add to `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "nhs-organizations": {
+    "nhs-organisations": {
       "command": "python",
       "args": ["-m", "nhs_orgs_mcp.server"],
       "env": {
@@ -49,10 +49,10 @@ Add to `claude_desktop_config.json`:
 ### 3. Restart Claude Desktop
 
 The MCP server will be available with 4 tools:
-- `get_organization_types` - List all NHS organization types
+- `get_organisation_types` - List all NHS organisation types
 - `convert_postcode_to_coordinates` - Convert UK postcodes to coordinates
-- `search_organizations_by_postcode` - Find organizations near a postcode
-- `search_organizations_by_coordinates` - Find organizations near coordinates
+- `search_organisations_by_postcode` - Find organisations near a postcode
+- `search_organisations_by_coordinates` - Find organisations near coordinates
 
 ## Package Statistics
 
@@ -65,8 +65,8 @@ The MCP server will be available with 4 tools:
 
 The package provides:
 - Complete MCP protocol implementation
-- 4 MCP tools for NHS organization search
-- 24 NHS organization types supported
+- 4 MCP tools for NHS organisation search
+- 24 NHS organisation types supported
 - API Management integration
 - Full type hints with Pydantic models
 
@@ -83,8 +83,8 @@ To publish future versions:
 
 ## Support
 
-- **Issues**: https://github.com/sinclr4/nhs-organizations-mcp-python/issues
-- **Documentation**: https://github.com/sinclr4/nhs-organizations-mcp-python#readme
+- **Issues**: https://github.com/sinclr4/nhs-organisations-mcp-python/issues
+- **Documentation**: https://github.com/sinclr4/nhs-organisations-mcp-python#readme
 
 ## Thank You!
 

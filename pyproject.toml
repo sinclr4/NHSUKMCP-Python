@@ -1,7 +1,7 @@
 [project]
-name = "nhs-organizations-mcp"
-version = "1.0.3"
-description = "NHS Organizations MCP Server - Search NHS organizations by type and location, plus access NHS health information"
+name = "nhs-organisations-mcp"
+version = "1.0.4"
+description = "NHS Organisations MCP Server - Search NHS organisations by type and location, plus access NHS health information"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -35,10 +35,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/sinclr4/nhs-organizations-mcp-python"
-Documentation = "https://github.com/sinclr4/nhs-organizations-mcp-python#readme"
-Repository = "https://github.com/sinclr4/nhs-organizations-mcp-python"
-Issues = "https://github.com/sinclr4/nhs-organizations-mcp-python/issues"
+Homepage = "https://github.com/sinclr4/nhs-organisations-mcp-python"
+Documentation = "https://github.com/sinclr4/nhs-organisations-mcp-python#readme"
+Repository = "https://github.com/sinclr4/nhs-organisations-mcp-python"
+Issues = "https://github.com/sinclr4/nhs-organisations-mcp-python/issues"
 
 [project.scripts]
 nhs-orgs-mcp = "nhs_orgs_mcp.server:main"

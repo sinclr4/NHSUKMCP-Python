@@ -31,8 +31,8 @@ python3 -m build
 ```
 
 This creates:
-- `dist/nhs_organizations_mcp-X.Y.Z.tar.gz` (source distribution)
-- `dist/nhs_organizations_mcp-X.Y.Z-py3-none-any.whl` (wheel)
+- `dist/nhs_organisations_mcp-X.Y.Z.tar.gz` (source distribution)
+- `dist/nhs_organisations_mcp-X.Y.Z-py3-none-any.whl` (wheel)
 
 ### 3. Upload to PyPI
 
@@ -46,15 +46,19 @@ When prompted:
 
 ### 4. Verify Publication
 
-Visit: https://pypi.org/project/nhs-organizations-mcp/
+Visit: https://pypi.org/project/nhs-organisations-mcp/
 
 ## Installation Test
 
 After publication, anyone can install with:
 
 ```bash
-pip install nhs-organizations-mcp
+pip install nhs-organisations-mcp
 ```
+
+## Testing Installation
+
+Test the installation works:
 
 ## Subsequent Releases
 
@@ -74,14 +78,14 @@ To test before publishing to real PyPI:
 
 1. Create account at https://test.pypi.org/
 2. Upload: `python3 -m twine upload --repository testpypi dist/*`
-3. Install: `pip install --index-url https://test.pypi.org/simple/ nhs-organizations-mcp`
+3. Install: `pip install --index-url https://test.pypi.org/simple/ nhs-organisations-mcp`
 
 ## Package Information
 
-- **Package Name**: `nhs-organizations-mcp`
-- **PyPI URL**: https://pypi.org/project/nhs-organizations-mcp/
-- **GitHub**: https://github.com/sinclr4/nhs-organizations-mcp-python
-- **Install Command**: `pip install nhs-organizations-mcp`
+- **Package Name**: `nhs-organisations-mcp`
+- **PyPI URL**: https://pypi.org/project/nhs-organisations-mcp/
+- **GitHub**: https://github.com/sinclr4/nhs-organisations-mcp-python
+- **Install Command**: `pip install nhs-organisations-mcp`
 - **Current Version**: 1.0.0
 
 ## Troubleshooting
@@ -106,20 +110,14 @@ pip install --upgrade build twine
 Users can install and use with:
 
 ```bash
-# Install
-pip install nhs-organizations-mcp
+```bash
+pip install nhs-organisations-mcp
+```
 
-# Configure in Claude Desktop
+Add to `claude_desktop_config.json`:
+
+```json
 {
   "mcpServers": {
-    "nhs-organizations": {
-      "command": "python",
-      "args": ["-m", "nhs_orgs_mcp.server"],
-      "env": {
-        "API_MANAGEMENT_ENDPOINT": "https://nhsuk-apim-int-uks.azure-api.net/service-search",
-        "API_MANAGEMENT_SUBSCRIPTION_KEY": "your-subscription-key-here"
-      }
-    }
-  }
-}
+    "nhs-organisations": {
 ```

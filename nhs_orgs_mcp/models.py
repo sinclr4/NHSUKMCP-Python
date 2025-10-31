@@ -1,4 +1,4 @@
-"""Data models for NHS Organizations"""
+"""Data models for NHS Organisations"""
 
 from typing import Optional
 from pydantic import BaseModel
@@ -11,8 +11,8 @@ class PostcodeResult(BaseModel):
     postcode: str
 
 
-class Organization(BaseModel):
-    """NHS Organization details"""
+class Organisation(BaseModel):
+    """NHS Organisation details"""
     organisation_code: str
     organisation_name: str
     organisation_type: str
@@ -26,8 +26,8 @@ class Organization(BaseModel):
     distance_miles: Optional[float] = None
 
 
-# NHS Organization Types
-ORGANIZATION_TYPES = {
+# NHS Organisation Types
+ORGANISATION_TYPES = {
     "CCG": "Clinical Commissioning Group",
     "CLI": "Clinic",
     "DEN": "Dental Practice",

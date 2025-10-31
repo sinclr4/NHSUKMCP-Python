@@ -1,6 +1,6 @@
-"""NHS Organizations MCP Server
+"""NHS Organisations MCP Server
 
-A Model Context Protocol server providing tools for searching NHS organizations.
+A Model Context Protocol server providing tools for searching NHS organisations.
 """
 
 import asyncio
@@ -13,7 +13,7 @@ from mcp.server import NotificationOptions, Server
 from mcp.server.stdio import stdio_server
 from mcp import types
 
-from .models import ORGANIZATION_TYPES
+from .models import ORGANISATION_TYPES
 from .azure_search import AzureSearchService
 
 # Configure logging
@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 search_service = AzureSearchService()
 
 # Create MCP server
-server = Server("nhs-organizations-mcp-server")
+server = Server("nhs-organisations-mcp-server")
 
 
 @server.list_tools()
@@ -35,8 +35,8 @@ async def handle_list_tools() -> list[types.Tool]:
     """List available MCP tools"""
     return [
         types.Tool(
-            name="get_organization_types",
-            description="Get a list of all available NHS organization types with their descriptions",
+            name="get_organisation_types",
+            description="Get a list of all available NHS organisation types with their descriptions",
             inputSchema={
                 "type": "object",
                 "properties": {},
@@ -58,14 +58,14 @@ async def handle_list_tools() -> list[types.Tool]:
             }
         ),
         types.Tool(
-            name="search_organizations_by_postcode",
-            description="Search for NHS organizations by type and postcode. First converts postcode to coordinates, then searches for nearby organizations.",
+            name="search_organisations_by_postcode",
+            description="Search for NHS organisations by type and postcode. First converts postcode to coordinates, then searches for nearby organisations.",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "organizationType": {
+                    "organisationType": {
                         "type": "string",
-                        "description": "NHS organization type code (e.g., 'PHA', 'GPP', 'HOS'). Use get_organization_types to see all available types."
+                        "description": "NHS organisation type code (e.g., 'PHA', 'GPP', 'HOS'). Use get_organisation_types to see all available types."
                     },
                     "postcode": {
                         "type": "string",
@@ -79,18 +79,18 @@ async def handle_list_tools() -> list[types.Tool]:
                         "maximum": 50
                     }
                 },
-                "required": ["organizationType", "postcode"]
+                "required": ["organisationType", "postcode"]
             }
         ),
         types.Tool(
-            name="search_organizations_by_coordinates",
-            description="Search for NHS organizations by type and coordinates (latitude/longitude)",
+            name="search_organisations_by_coordinates",
+            description="Search for NHS organisations by type and coordinates (latitude/longitude)",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "organizationType": {
+                    "organisationType": {
                         "type": "string",
-                        "description": "NHS organization type code (e.g., 'PHA', 'GPP', 'HOS'). Use get_organization_types to see all available types."
+                        "description": "NHS organisation type code (e.g., 'PHA', 'GPP', 'HOS'). Use get_organisation_types to see all available types."
                     },
                     "latitude": {
                         "type": "number",
@@ -108,7 +108,7 @@ async def handle_list_tools() -> list[types.Tool]:
                         "maximum": 50
                     }
                 },
-                "required": ["organizationType", "latitude", "longitude"]
+                "required": ["organisationType", "latitude", "longitude"]
             }
         ),
         types.Tool(
@@ -135,10 +135,10 @@ async def handle_call_tool(
 ) -> list[types.TextContent]:
     """Handle tool execution"""
     
-    if name == "get_organization_types":
+    if name == "get_organisation_types":
         return [types.TextContent(
             type="text",
-            text=str(ORGANIZATION_TYPES)
+            text=str(ORGANISATION_TYPES)
         )]
     
     elif name == "convert_postcode_to_coordinates":
@@ -172,21 +172,21 @@ async def handle_call_tool(
                 text=f"Error: {str(e)}"
             )]
     
-    elif name == "search_organizations_by_postcode":
+    elif name == "search_organisations_by_postcode":
         if not arguments:
             raise ValueError("Arguments required")
         
-        org_type = arguments.get("organizationType", "").upper()
+        org_type = arguments.get("organisationType", "").upper()
         postcode = arguments.get("postcode", "")
         max_results = arguments.get("maxResults", 10)
         
         if not org_type or not postcode:
-            raise ValueError("organizationType and postcode are required")
+            raise ValueError("organisationType and postcode are required")
         
-        if org_type not in ORGANIZATION_TYPES:
+        if org_type not in ORGANISATION_TYPES:
             return [types.TextContent(
                 type="text",
-                text=f"Invalid organization type '{org_type}'. Available types: {', '.join(ORGANIZATION_TYPES.keys())}"
+                text=f"Invalid organisation type '{org_type}'. Available types: {', '.join(ORGANISATION_TYPES.keys())}"
             )]
         
         if not search_service.is_configured:
@@ -204,23 +204,23 @@ async def handle_call_tool(
                     text=f"Postcode '{postcode}' not found"
                 )]
             
-            # Search organizations
-            organizations = await search_service.search_organizations(
+            # Search organisations
+            organisations = await search_service.search_organisations(
                 org_type,
                 coords.latitude,
                 coords.longitude,
                 max_results
             )
             
-            if not organizations:
+            if not organisations:
                 return [types.TextContent(
                     type="text",
-                    text=f"No {ORGANIZATION_TYPES[org_type]} organizations found near {postcode}"
+                    text=f"No {ORGANISATION_TYPES[org_type]} organisations found near {postcode}"
                 )]
             
-            result_text = f"Found {len(organizations)} {ORGANIZATION_TYPES[org_type]} near {postcode} ({coords.latitude}, {coords.longitude}):\n\n"
+            result_text = f"Found {len(organisations)} {ORGANISATION_TYPES[org_type]} near {postcode} ({coords.latitude}, {coords.longitude}):\n\n"
             
-            for org in organizations:
+            for org in organisations:
                 result_text += f"• {org.organisation_name} ({org.organisation_code})\n"
                 if org.address_line_1:
                     result_text += f"  {org.address_line_1}\n"
@@ -240,28 +240,28 @@ async def handle_call_tool(
             )]
             
         except Exception as e:
-            logger.error(f"Error searching organizations: {e}")
+            logger.error(f"Error searching organisations: {e}")
             return [types.TextContent(
                 type="text",
                 text=f"Error: {str(e)}"
             )]
     
-    elif name == "search_organizations_by_coordinates":
+    elif name == "search_organisations_by_coordinates":
         if not arguments:
             raise ValueError("Arguments required")
         
-        org_type = arguments.get("organizationType", "").upper()
+        org_type = arguments.get("organisationType", "").upper()
         latitude = arguments.get("latitude")
         longitude = arguments.get("longitude")
         max_results = arguments.get("maxResults", 10)
         
         if not org_type or latitude is None or longitude is None:
-            raise ValueError("organizationType, latitude, and longitude are required")
+            raise ValueError("organisationType, latitude, and longitude are required")
         
-        if org_type not in ORGANIZATION_TYPES:
+        if org_type not in ORGANISATION_TYPES:
             return [types.TextContent(
                 type="text",
-                text=f"Invalid organization type '{org_type}'. Available types: {', '.join(ORGANIZATION_TYPES.keys())}"
+                text=f"Invalid organisation type '{org_type}'. Available types: {', '.join(ORGANISATION_TYPES.keys())}"
             )]
         
         if not search_service.is_configured:
@@ -271,22 +271,22 @@ async def handle_call_tool(
             )]
         
         try:
-            organizations = await search_service.search_organizations(
+            organisations = await search_service.search_organisations(
                 org_type,
                 latitude,
                 longitude,
                 max_results
             )
             
-            if not organizations:
+            if not organisations:
                 return [types.TextContent(
                     type="text",
-                    text=f"No {ORGANIZATION_TYPES[org_type]} organizations found near ({latitude}, {longitude})"
+                    text=f"No {ORGANISATION_TYPES[org_type]} organisations found near ({latitude}, {longitude})"
                 )]
             
-            result_text = f"Found {len(organizations)} {ORGANIZATION_TYPES[org_type]} near ({latitude}, {longitude}):\n\n"
+            result_text = f"Found {len(organisations)} {ORGANISATION_TYPES[org_type]} near ({latitude}, {longitude}):\n\n"
             
-            for org in organizations:
+            for org in organisations:
                 result_text += f"• {org.organisation_name} ({org.organisation_code})\n"
                 if org.address_line_1:
                     result_text += f"  {org.address_line_1}\n"
@@ -306,7 +306,7 @@ async def handle_call_tool(
             )]
             
         except Exception as e:
-            logger.error(f"Error searching organizations: {e}")
+            logger.error(f"Error searching organisations: {e}")
             return [types.TextContent(
                 type="text",
                 text=f"Error: {str(e)}"
@@ -381,12 +381,12 @@ async def handle_call_tool(
 async def run_server():
     """Run the MCP server"""
     async with stdio_server() as (read_stream, write_stream):
-        logger.info("NHS Organizations MCP Server starting...")
+        logger.info("NHS Organisations MCP Server starting...")
         await server.run(
             read_stream,
             write_stream,
             InitializationOptions(
-                server_name="nhs-organizations-mcp-server",
+                server_name="nhs-organisations-mcp-server",
                 server_version="1.0.0",
                 capabilities=server.get_capabilities(
                     notification_options=NotificationOptions(),

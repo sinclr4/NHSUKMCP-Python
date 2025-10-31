@@ -1,6 +1,6 @@
-"""NHS Organizations MCP Server
+"""NHS Organisations MCP Server
 
-A Model Context Protocol server that provides tools for searching NHS organizations
+A Model Context Protocol server that provides tools for searching NHS organisations
 by type and location using Azure Cognitive Search.
 """
 

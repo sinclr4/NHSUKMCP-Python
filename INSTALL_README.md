@@ -30,7 +30,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ## Available Tools
 
-1. **get_organization_types** - List all NHS organization types (Pharmacy, GP, Hospital, etc.)
+1. **get_organisation_types** - List all NHS organisation types (Pharmacy, GP, Hospital, etc.)
 2. **convert_postcode_to_coordinates** - Convert UK postcode to latitude/longitude
 3. **search_organizations_by_postcode** - Find organizations near a postcode
 4. **search_organizations_by_coordinates** - Find organizations near coordinates
