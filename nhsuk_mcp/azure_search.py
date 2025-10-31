@@ -13,10 +13,10 @@ class AzureSearchService:
     """Service for interacting with Azure API Management for NHS service search"""
     
     def __init__(self):
-        # API Management endpoint
-        self.endpoint = os.getenv(
+        # API Management base endpoint
+        self.base_endpoint = os.getenv(
             "API_MANAGEMENT_ENDPOINT", 
-            "https://nhsuk-apim-int-uks.azure-api.net/service-search"
+            "https://nhsuk-apim-int-uks.azure-api.net"
         )
         # Subscription key
         self.subscription_key = os.getenv("API_MANAGEMENT_SUBSCRIPTION_KEY", "")
@@ -43,7 +43,7 @@ class AzureSearchService:
             return None
         
         # Use query parameter instead of path parameter
-        url = f"{self.endpoint}/postcodesandplaces/"
+        url = f"{self.base_endpoint}/service-search/postcodesandplaces/"
         params = {
             "search": postcode,
             "api-version": "2"
@@ -113,7 +113,7 @@ class AzureSearchService:
             logger.error("API Management not configured")
             return []
         
-        url = f"{self.endpoint}/search"
+        url = f"{self.base_endpoint}/service-search/search"
         params = {"api-version": "2"}
         
         # Create search body with geo filter
@@ -213,7 +213,7 @@ class AzureSearchService:
             return None
         
         # Conditions API endpoint (different from service-search)
-        url = f"https://nhsuk-apim-int-uks.azure-api.net/conditions/{topic_slug}"
+        url = f"{self.base_endpoint}/conditions/{topic_slug}"
         
         headers = {
             "subscription-key": self.subscription_key

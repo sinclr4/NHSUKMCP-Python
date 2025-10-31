@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 search_service = AzureSearchService()
 
 # Create MCP server
-server = Server("nhs-organisations-mcp-server")
+server = Server("nhs-mcp-server")
 
 
 @server.list_tools()

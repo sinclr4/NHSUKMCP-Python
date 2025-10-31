@@ -32,7 +32,7 @@ pip install -e .
 
 This server requires two environment variables:
 
-- `API_MANAGEMENT_ENDPOINT` - The Azure API Management endpoint URL
+- `API_MANAGEMENT_ENDPOINT` - The Azure API Management base URL (without service paths)
 - `API_MANAGEMENT_SUBSCRIPTION_KEY` - Your subscription key for API Management
 
 ## Usage with Claude Desktop
@@ -56,7 +56,7 @@ Add to your Claude Desktop config file:
       "command": "python",
       "args": ["-m", "nhsuk_mcp.server"],
       "env": {
-        "API_MANAGEMENT_ENDPOINT": "https://nhsuk-apim-int-uks.azure-api.net/service-search",
+        "API_MANAGEMENT_ENDPOINT": "https://nhsuk-apim-int-uks.azure-api.net",
         "API_MANAGEMENT_SUBSCRIPTION_KEY": "your-subscription-key-here"
       }
     }
@@ -73,7 +73,7 @@ Add to your Claude Desktop config file:
       "command": "python",
       "args": ["-m", "nhsuk_mcp.server"],
       "env": {
-        "API_MANAGEMENT_ENDPOINT": "https://nhsuk-apim-int-uks.azure-api.net/service-search",  
+        "API_MANAGEMENT_ENDPOINT": "https://nhsuk-apim-int-uks.azure-api.net",  
         "API_MANAGEMENT_SUBSCRIPTION_KEY": "your-subscription-key-here"
       }
     }
@@ -186,7 +186,7 @@ docker build -t nhs-orgs-mcp-python .
 
 ```bash
 docker run -i \
-  -e API_MANAGEMENT_ENDPOINT="https://nhsuk-apim-int-uks.azure-api.net/service-search" \
+  -e API_MANAGEMENT_ENDPOINT="https://nhsuk-apim-int-uks.azure-api.net" \
   -e API_MANAGEMENT_SUBSCRIPTION_KEY="your-key" \
   nhs-orgs-mcp-python
 ```
@@ -221,7 +221,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -e .
 
 # Set environment variables
-export API_MANAGEMENT_ENDPOINT="https://nhsuk-apim-int-uks.azure-api.net/service-search"
+export API_MANAGEMENT_ENDPOINT="https://nhsuk-apim-int-uks.azure-api.net"
 export API_MANAGEMENT_SUBSCRIPTION_KEY="your-key"
 
 # Run the server
