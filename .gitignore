@@ -58,3 +58,19 @@ build/
 dist/
 build/
 *.egg-info/
+
+# PyPI credentials
+.pypirc
+
+# Local development
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Linux
+*~
