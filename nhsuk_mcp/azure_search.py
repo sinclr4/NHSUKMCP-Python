@@ -199,6 +199,82 @@ class AzureSearchService:
         
         return R * c
 
+    def _extract_content_sections(self, data: dict) -> list:
+        """Recursively extract content sections from hasPart elements
+        
+        Args:
+            data: The JSON data structure to extract sections from
+            
+        Returns:
+            List of content sections with headline and text
+        """
+        sections = []
+        
+        def extract_from_part(part):
+            """Recursively extract content from a part"""
+            if not isinstance(part, dict):
+                return
+                
+            # Extract basic content from this part
+            section = {}
+            if part.get("headline"):
+                section["headline"] = part.get("headline")
+            if part.get("text"):
+                section["text"] = part.get("text")
+            if part.get("description") and not part.get("text"):
+                section["text"] = part.get("description")
+                
+            # Only add section if it has meaningful content
+            if section.get("headline") or section.get("text"):
+                sections.append(section)
+            
+            # Recursively process hasPart elements
+            if "hasPart" in part:
+                has_parts = part["hasPart"]
+                if isinstance(has_parts, list):
+                    for sub_part in has_parts:
+                        extract_from_part(sub_part)
+                elif isinstance(has_parts, dict):
+                    extract_from_part(has_parts)
+        
+        # Start extraction from multiple possible root elements
+        root_elements = []
+        
+        # Check mainEntityOfPage
+        if "mainEntityOfPage" in data:
+            main_content = data["mainEntityOfPage"]
+            if isinstance(main_content, list):
+                root_elements.extend(main_content)
+            elif isinstance(main_content, dict):
+                root_elements.append(main_content)
+        
+        # Check direct hasPart
+        if "hasPart" in data:
+            has_parts = data["hasPart"]
+            if isinstance(has_parts, list):
+                root_elements.extend(has_parts)
+            elif isinstance(has_parts, dict):
+                root_elements.append(has_parts)
+        
+        # Also check the root data itself
+        root_elements.append(data)
+        
+        # Process all root elements
+        for element in root_elements:
+            extract_from_part(element)
+        
+        # Remove duplicates while preserving order
+        seen = set()
+        unique_sections = []
+        for section in sections:
+            # Create a simple key from headline and first 50 chars of text
+            key = f"{section.get('headline', '')[:50]}_{section.get('text', '')[:50]}"
+            if key not in seen:
+                seen.add(key)
+                unique_sections.append(section)
+        
+        return unique_sections
+
     async def get_health_topic(self, topic_slug: str) -> Optional[dict]:
         """Get health condition/topic information from NHS API
         
@@ -229,27 +305,23 @@ class AzureSearchService:
                 logger.debug(f"Health topic response: {data.get('name', 'Unknown')}")
                 
                 # Extract relevant information
+                # Always use www.nhs.uk for the public-facing URL
+                api_url = data.get("url")
+                if api_url:
+                    website_url = api_url.replace("api.nhs.uk", "www.nhs.uk")
+                else:
+                    website_url = None
                 result = {
                     "name": data.get("name"),
                     "description": data.get("description"),
-                    "url": data.get("url"),
+                    "url": website_url,
                     "dateModified": data.get("dateModified"),
                     "lastReviewed": data.get("lastReviewed", [None, None]),
-                    "genre": data.get("genre", []),
+                    "genre": data.get("genre", [])
                 }
                 
-                # Extract main content sections if available
-                if "mainEntityOfPage" in data:
-                    main_content = data["mainEntityOfPage"]
-                    if isinstance(main_content, list):
-                        result["sections"] = []
-                        for section in main_content:
-                            if isinstance(section, dict):
-                                result["sections"].append({
-                                    "headline": section.get("headline"),
-                                    "text": section.get("text"),
-                                    "description": section.get("description")
-                                })
+                # Extract content sections using recursive hasPart processing
+                result["sections"] = self._extract_content_sections(data)
                 
                 return result
                 

@@ -3,18 +3,21 @@
 A Model Context Protocol server providing tools for searching NHS organisations.
 """
 
+# Load environment variables from .env file first, before any other imports
+from dotenv import load_dotenv
+load_dotenv()
+
 import asyncio
 import logging
 import os
 from typing import Any
-
 from mcp.server.models import InitializationOptions
 from mcp.server import NotificationOptions, Server
 from mcp.server.stdio import stdio_server
 from mcp import types
 
-from .models import ORGANISATION_TYPES
-from .azure_search import AzureSearchService
+from nhsuk_mcp.models import ORGANISATION_TYPES
+from nhsuk_mcp.azure_search import AzureSearchService
 
 # Configure logging
 logging.basicConfig(
